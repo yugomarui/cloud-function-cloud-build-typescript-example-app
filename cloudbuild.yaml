@@ -1,0 +1,19 @@
+steps:
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['install']
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['run', 'build']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - helloWorld
+      - --region=asia-northeast1
+      - --source=.
+      - --trigger-http
+      - --runtime=nodejs16
+substitutions:
+  _NODE_VERSION: 16.14.2
